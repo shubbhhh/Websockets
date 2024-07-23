@@ -4,6 +4,7 @@ import './App.css'
 function App() {
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [latestMessages, setLatestMessages] = useState("");
+  const [userMessage, setUserMessage] = useState("");
 
   useEffect(() => {
     const newSocket = new WebSocket('ws://localhost:8080');
@@ -26,9 +27,17 @@ function App() {
   }
 
   return (
-    <>
-      {latestMessages}
-    </>
+    <div>
+      <input type="text" onChange={(e) => setUserMessage(e.target.value)}/>
+      <button
+        onClick={() => socket.send(userMessage)}
+      >
+        Send
+      </button>
+      <div>
+        {latestMessages}
+      </div>
+    </div>
   )
 }
 
